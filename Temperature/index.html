@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+
+<div class="container">
+  <div class="info" id="wifi"><i class="fas fa-wifi"></i></div>
+  <div class="info" id="battery"><i class="fas fa-battery-full"></i></div>
+  <div class="info" id="clock"><i class="far fa-clock"></i></div>
+  <h2>Temperature Converter</h2>
+  <div class="result" id="result"></div>
+  <input type="text" id="temperature" placeholder="Enter temperature">
+  <select id="unit">
+    <option value="celsius">Celsius (°C)</option>
+    <option value="fahrenheit">Fahrenheit (°F)</option>
+    <option value="kelvin">Kelvin (K)</option>
+  </select>
+  <button onclick="convertTemperature()">Convert</button>
+</div>
+
+<script>
+  // Temperature Conversion function
+  function convertTemperature() {
+    const temperatureInput = document.getElementById('temperature').value;
+    const unit = document.getElementById('unit').value;
+    let convertedTemperature;
+    if (unit === 'celsius') {
+      convertedTemperature = parseFloat(temperatureInput);
+      document.getElementById('result').innerHTML = `${convertedTemperature.toFixed(2)} °C`;
+    } else if (unit === 'fahrenheit') {
+      convertedTemperature = (temperatureInput * 9 / 5) + 32;
+      document.getElementById('result').innerHTML = `${convertedTemperature.toFixed(2)} °F`;
+    } else if (unit === 'kelvin') {
+      convertedTemperature = parseFloat(temperatureInput) + 273.15;
+      document.getElementById('result').innerHTML = `${convertedTemperature.toFixed(2)} K`;
+    }
+  }
+
+  // Clock update function
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('clock').innerHTML = `<i class="far fa-clock"></i> ${hours}:${minutes}:${seconds}`;
+  }
+
+  // Battery update function
+  function updateBattery() {
+    // Simulating battery level between 0 and 100%
+    const batteryLevel = Math.floor(Math.random() * 101);
+    let batteryIcon;
+    if (batteryLevel > 75) {
+      batteryIcon = '<i class="fas fa-battery-full"></i>';
+    } else if (batteryLevel > 50) {
+      batteryIcon = '<i class="fas fa-battery-three-quarters"></i>';
+    } else if (batteryLevel > 25) {
+      batteryIcon = '<i class="fas fa-battery-half"></i>';
+    } else if (batteryLevel > 10) {
+      batteryIcon = '<i class="fas fa-battery-quarter"></i>';
+    } else {
+      batteryIcon = '<i class="fas fa-battery-empty"></i>';
+    }
+    document.getElementById('battery').innerHTML = `${batteryIcon} Battery level: ${batteryLevel}%`;
+  }
+
+  // Initial call to update clock, battery, and wifi
+  updateClock();
+  updateBattery();
+
+  // Set interval to update clock, battery, and wifi every second
+  setInterval(updateClock, 1000);
+  setInterval(updateBattery, 5000); // Update battery every 5 seconds
+</script>
+
+</body>
+</html>
+
+
